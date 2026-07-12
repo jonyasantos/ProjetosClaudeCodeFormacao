@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Bitcoin</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="cabecalho">
+    <div class="cabecalho-titulo">
+      <span class="logo-btc">₿</span>
+      <h1>Dashboard Bitcoin</h1>
+    </div>
+
+    <div class="cabecalho-preco" id="bloco-preco-atual">
+      <div class="preco-atual" id="preco-atual">Carregando...</div>
+      <div class="variacao-24h" id="variacao-24h"></div>
+      <button id="botao-moeda" class="botao-moeda" type="button">Ver em BRL</button>
+    </div>
+  </header>
+
+  <main>
+
+    <div id="mensagem-status" class="mensagem-status" hidden></div>
+
+    <section class="grid-graficos">
+      <div class="card">
+        <h2>Variação semanal (últimos 7 dias)</h2>
+        <div class="grafico-wrapper">
+          <canvas id="grafico-semanal"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Variação anual (últimos 365 dias)</h2>
+        <div class="grafico-wrapper">
+          <canvas id="grafico-anual"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Período customizado</h2>
+      <form id="form-periodo" class="form-periodo">
+        <label>
+          Data inicial
+          <input type="date" id="data-inicial" required />
+        </label>
+        <label>
+          Data final
+          <input type="date" id="data-final" required />
+        </label>
+        <button type="submit">Atualizar</button>
+      </form>
+
+      <div class="grafico-wrapper">
+        <canvas id="grafico-periodo"></canvas>
+      </div>
+
+      <h3>Dados históricos do período</h3>
+      <div class="tabela-wrapper">
+        <table id="tabela-historico">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Preço</th>
+              <th>Variação vs. dia anterior</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-historico-corpo"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="rodape">
+    Dados fornecidos pela <a href="https://www.coingecko.com/" target="_blank" rel="noopener">CoinGecko API</a> (gratuita, sem chave de acesso).
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
