@@ -23,6 +23,8 @@ import {
 import { criarTransacao, atualizarTransacao } from "./actions";
 import type { Categoria, Transacao } from "@/lib/supabase/database.types";
 
+const ITENS_TIPO = { receita: "Receita", despesa: "Despesa" };
+
 interface FormularioTransacaoProps {
   categorias: Categoria[];
   transacao?: Transacao;
@@ -40,6 +42,9 @@ export function FormularioTransacao({
 }: FormularioTransacaoProps) {
   const [aberto, setAberto] = useState(false);
   const editando = Boolean(transacao);
+  const itensCategoria = Object.fromEntries(
+    categorias.map((categoria) => [categoria.id, categoria.name]),
+  );
 
   async function aoEnviar(formData: FormData) {
     if (transacao) {
@@ -105,6 +110,7 @@ export function FormularioTransacao({
               <Label htmlFor="tipo">Tipo</Label>
               <Select
                 name="tipo"
+                items={ITENS_TIPO}
                 defaultValue={transacao?.type ?? "despesa"}
                 required
               >
@@ -121,6 +127,7 @@ export function FormularioTransacao({
               <Label htmlFor="categoriaId">Categoria</Label>
               <Select
                 name="categoriaId"
+                items={itensCategoria}
                 defaultValue={transacao?.category_id ?? undefined}
                 required
               >

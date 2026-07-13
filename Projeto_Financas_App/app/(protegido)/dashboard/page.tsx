@@ -58,7 +58,7 @@ export default async function DashboardPage() {
         <h1 className="text-2xl font-semibold break-words">
           Olá, {user?.email}
         </h1>
-        <p className="text-sm text-muted-foreground capitalize">
+        <p className="text-sm text-muted-foreground">
           Resumo de {mesAtual}.
         </p>
       </div>

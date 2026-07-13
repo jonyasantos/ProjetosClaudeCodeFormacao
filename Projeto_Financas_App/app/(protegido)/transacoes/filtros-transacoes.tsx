@@ -13,6 +13,8 @@ import {
 import { LinkButton } from "@/components/link-button";
 import type { Categoria } from "@/lib/supabase/database.types";
 
+const ITENS_TIPO = { todos: "Todos", receita: "Receita", despesa: "Despesa" };
+
 interface FiltrosTransacoesProps {
   categorias: Categoria[];
   valores: {
@@ -34,6 +36,11 @@ export function FiltrosTransacoes({
   categorias,
   valores,
 }: FiltrosTransacoesProps) {
+  const itensCategoria = {
+    todas: "Todas",
+    ...Object.fromEntries(categorias.map((c) => [c.id, c.name])),
+  };
+
   return (
     <form
       method="GET"
@@ -50,7 +57,7 @@ export function FiltrosTransacoes({
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="tipo">Tipo</Label>
-        <Select name="tipo" defaultValue={valores.tipo ?? "todos"}>
+        <Select name="tipo" items={ITENS_TIPO} defaultValue={valores.tipo ?? "todos"}>
           <SelectTrigger id="tipo" className="w-36">
             <SelectValue />
           </SelectTrigger>
@@ -63,7 +70,11 @@ export function FiltrosTransacoes({
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="categoriaId">Categoria</Label>
-        <Select name="categoriaId" defaultValue={valores.categoriaId ?? "todas"}>
+        <Select
+          name="categoriaId"
+          items={itensCategoria}
+          defaultValue={valores.categoriaId ?? "todas"}
+        >
           <SelectTrigger id="categoriaId" className="w-40">
             <SelectValue />
           </SelectTrigger>

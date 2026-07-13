@@ -48,6 +48,9 @@ export function FormularioImportarOfx({
   const [erro, setErro] = useState<string | null>(null);
   const [pendente, iniciarTransicao] = useTransition();
   const router = useRouter();
+  const itensCategoria = Object.fromEntries(
+    categorias.map((categoria) => [categoria.id, categoria.name]),
+  );
 
   async function aoAnalisar(formData: FormData) {
     setErro(null);
@@ -167,6 +170,7 @@ export function FormularioImportarOfx({
                 </TableCell>
                 <TableCell>
                   <Select
+                    items={itensCategoria}
                     value={linha.categoriaId ?? undefined}
                     onValueChange={(valor) =>
                       definirCategoria(linha.fitId, valor)

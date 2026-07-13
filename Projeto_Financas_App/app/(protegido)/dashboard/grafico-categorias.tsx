@@ -50,9 +50,10 @@ export function GraficoCategorias({ dados }: { dados: DadoCategoria[] }) {
             nameKey="categoria"
             innerRadius="55%"
             outerRadius="80%"
-            paddingAngle={2}
+            paddingAngle={dados.length > 1 ? 2 : 0}
             stroke="var(--card)"
             strokeWidth={2}
+            isAnimationActive={false}
           >
             {dados.map((item) => (
               <Cell
