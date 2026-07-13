@@ -1,4 +1,5 @@
 import { LinkButton } from "@/components/link-button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   Card,
   CardDescription,
@@ -48,6 +49,7 @@ export default function Home() {
             Finanças<span className="text-primary">+</span>
           </span>
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <LinkButton variant="ghost" href="/login">
               Entrar
             </LinkButton>

@@ -22,8 +22,7 @@ import {
 } from "@/components/ui/select";
 import { criarTransacao, atualizarTransacao } from "./actions";
 import type { Categoria, Transacao } from "@/lib/supabase/database.types";
-
-const ITENS_TIPO = { receita: "Receita", despesa: "Despesa" };
+import { ITENS_TIPO } from "@/lib/transacoes/tipos";
 
 interface FormularioTransacaoProps {
   categorias: Categoria[];
@@ -120,6 +119,9 @@ export function FormularioTransacao({
                 <SelectContent>
                   <SelectItem value="receita">Receita</SelectItem>
                   <SelectItem value="despesa">Despesa</SelectItem>
+                  <SelectItem value="despesa_cartao">
+                    Despesa - Cartão de Crédito
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>

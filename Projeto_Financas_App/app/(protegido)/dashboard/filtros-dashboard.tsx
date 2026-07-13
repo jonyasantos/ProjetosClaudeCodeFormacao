@@ -1,6 +1,5 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,45 +15,91 @@ import { ITENS_TIPO } from "@/lib/transacoes/tipos";
 
 const ITENS_TIPO_FILTRO = { todos: "Todos", ...ITENS_TIPO };
 
-interface FiltrosTransacoesProps {
+const NOMES_MES = [
+  "Janeiro",
+  "Fevereiro",
+  "Março",
+  "Abril",
+  "Maio",
+  "Junho",
+  "Julho",
+  "Agosto",
+  "Setembro",
+  "Outubro",
+  "Novembro",
+  "Dezembro",
+];
+
+const ITENS_MES = {
+  todos: "Todos os meses",
+  ...Object.fromEntries(
+    NOMES_MES.map((nome, indice) => [String(indice + 1), nome]),
+  ),
+};
+
+function anosDisponiveis() {
+  const anoAtual = new Date().getFullYear();
+  return Array.from({ length: 6 }, (_, indice) => anoAtual - indice);
+}
+
+interface FiltrosDashboardProps {
   categorias: Categoria[];
   valores: {
-    busca?: string;
-    categoriaId?: string;
+    ano: string;
+    mes: string;
     tipo?: string;
-    de?: string;
-    ate?: string;
+    categoriaId?: string;
   };
+  filtroAtivo: boolean;
 }
 
-function algumFiltroAtivo(valores: FiltrosTransacoesProps["valores"]) {
-  return Boolean(
-    valores.busca || valores.categoriaId || valores.tipo || valores.de || valores.ate,
-  );
-}
-
-export function FiltrosTransacoes({
+export function FiltrosDashboard({
   categorias,
   valores,
-}: FiltrosTransacoesProps) {
+  filtroAtivo,
+}: FiltrosDashboardProps) {
   const itensCategoria = {
     todas: "Todas",
     ...Object.fromEntries(categorias.map((c) => [c.id, c.name])),
   };
+  const anos = anosDisponiveis();
+  const itensAno = Object.fromEntries(anos.map((ano) => [String(ano), String(ano)]));
 
   return (
     <form
       method="GET"
       className="flex flex-wrap items-end gap-3 rounded-xl border p-4"
     >
-      <div className="flex min-w-40 flex-1 flex-col gap-2">
-        <Label htmlFor="busca">Buscar</Label>
-        <Input
-          id="busca"
-          name="busca"
-          placeholder="Descrição..."
-          defaultValue={valores.busca}
-        />
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="ano">Ano</Label>
+        <Select name="ano" items={itensAno} defaultValue={valores.ano}>
+          <SelectTrigger id="ano" className="w-28">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {anos.map((ano) => (
+              <SelectItem key={ano} value={String(ano)}>
+                {ano}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="mes">Mês</Label>
+        <Select name="mes" items={ITENS_MES} defaultValue={valores.mes}>
+          <SelectTrigger id="mes" className="w-40">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="todos">Todos os meses</SelectItem>
+            {NOMES_MES.map((nome, indice) => (
+              <SelectItem key={nome} value={String(indice + 1)}>
+                {nome}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="tipo">Tipo</Label>
@@ -63,7 +108,7 @@ export function FiltrosTransacoes({
           items={ITENS_TIPO_FILTRO}
           defaultValue={valores.tipo ?? "todos"}
         >
-          <SelectTrigger id="tipo" className="w-36">
+          <SelectTrigger id="tipo" className="w-44">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -96,29 +141,9 @@ export function FiltrosTransacoes({
           </SelectContent>
         </Select>
       </div>
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="de">De</Label>
-        <Input
-          id="de"
-          name="de"
-          type="date"
-          defaultValue={valores.de}
-          className="w-36"
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="ate">Até</Label>
-        <Input
-          id="ate"
-          name="ate"
-          type="date"
-          defaultValue={valores.ate}
-          className="w-36"
-        />
-      </div>
       <Button type="submit">Filtrar</Button>
-      {algumFiltroAtivo(valores) && (
-        <LinkButton variant="ghost" href="/transacoes">
+      {filtroAtivo && (
+        <LinkButton variant="ghost" href="/dashboard">
           Limpar filtros
         </LinkButton>
       )}

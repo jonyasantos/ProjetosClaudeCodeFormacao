@@ -14,6 +14,7 @@ import { BotaoExcluirTransacao } from "./botao-excluir-transacao";
 import { FiltrosTransacoes } from "./filtros-transacoes";
 import { BotaoExportar } from "./botao-exportar";
 import type { TipoTransacao } from "@/lib/supabase/database.types";
+import { ITENS_TIPO } from "@/lib/transacoes/tipos";
 
 function formatarMoeda(valor: number) {
   return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -133,7 +134,7 @@ export default async function TransacoesPage({
                           : "text-destructive"
                       }
                     >
-                      {transacao.type === "receita" ? "Receita" : "Despesa"}
+                      {ITENS_TIPO[transacao.type as TipoTransacao]}
                     </span>
                   </TableCell>
                   <TableCell className="text-right font-medium">

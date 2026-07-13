@@ -1,6 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
 import ExcelJS from "exceljs";
 import { createClient } from "@/lib/supabase/server";
+import { ITENS_TIPO } from "@/lib/transacoes/tipos";
+import type { TipoTransacao } from "@/lib/supabase/database.types";
 
 const BOM_UTF8 = "﻿";
 
@@ -48,7 +50,7 @@ export async function GET(request: NextRequest) {
     descricao: transacao.description,
     valor: transacao.amount,
     data: transacao.date,
-    tipo: transacao.type === "receita" ? "Receita" : "Despesa",
+    tipo: ITENS_TIPO[transacao.type as TipoTransacao],
     categoria: transacao.categories?.name ?? "",
   }));
 

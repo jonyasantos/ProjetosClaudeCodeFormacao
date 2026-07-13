@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { logout } from "@/lib/auth/actions";
 import { LinkButton } from "@/components/link-button";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default async function ProtegidoLayout({
   children,
@@ -21,11 +22,14 @@ export default async function ProtegidoLayout({
             <span className="text-lg font-semibold tracking-tight">
               Finanças<span className="text-primary">+</span>
             </span>
-            <form action={logout} className="sm:hidden">
-              <Button type="submit" variant="outline" size="sm">
-                Sair
-              </Button>
-            </form>
+            <div className="flex items-center gap-2 sm:hidden">
+              <ThemeToggle />
+              <form action={logout}>
+                <Button type="submit" variant="outline" size="sm">
+                  Sair
+                </Button>
+              </form>
+            </div>
           </div>
 
           <nav className="flex items-center gap-1">
@@ -41,6 +45,7 @@ export default async function ProtegidoLayout({
             <span className="text-sm text-muted-foreground">
               {user?.email}
             </span>
+            <ThemeToggle />
             <form action={logout}>
               <Button type="submit" variant="outline" size="sm">
                 Sair

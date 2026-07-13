@@ -91,7 +91,7 @@ export type Database = {
 };
 
 // Tipos de conveniência usados no restante do app.
-export type TipoTransacao = "receita" | "despesa";
+export type TipoTransacao = "receita" | "despesa" | "despesa_cartao";
 export type Categoria = Database["public"]["Tables"]["categories"]["Row"];
 export type Transacao = Omit<
   Database["public"]["Tables"]["transactions"]["Row"],
